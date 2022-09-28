@@ -1,0 +1,28 @@
+{
+  "exercises": [
+    {
+      "title": "Introducing the world table of countries",
+      "serial_number": 1,
+      "description": "The example uses a WHERE clause to show the population of \"France\". Note that strings (pieces of text that are data) should be in \"single quotes\"",
+      "task": "Modify it to show the population of Germany",
+      "basic_query": "SELECT population FROM world WHERE name = 'France'",
+      "result": "result"
+    },
+    {
+      "title": "Scandinavia",
+      "serial_number": 2,
+      "description": "Checking a list The word IN allows us to check if an item is in a list. The example shows the name and population for the countries 'Brazil', 'Russia', 'India' and 'China'.",
+      "task": "Show the name and the population for 'Sweden', 'Norway' and 'Denmark'.",
+      "basic_query": "SELECT name, population FROM world WHERE name IN ('Brazil', 'Russia', 'India', 'China');",
+      "result": "result"
+    },
+    {
+      "title": "Just the right size",
+      "serial_number": 3,
+      "description": "Which countries are not too small and not too big? BETWEEN allows range checking (range specified is inclusive of boundary values). The example below shows countries with an area of 250,000-300,000 sq. km. Modify it to show the country and the area for countries with an area between 200,000 and 250,000.",
+      "task": "",
+      "basic_query": "SELECT name, area FROM world WHERE area BETWEEN 250000 AND 300000",
+      "result": "result"
+    }
+  ]
+}
