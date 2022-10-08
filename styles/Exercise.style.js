@@ -14,8 +14,14 @@ export const Exercise_style = styled.div`
   }
   .result {
     width: 50%;
+    max-width: 50vw;
     min-height: 100%;
+    max-height: 300px;
     border-radius: 10px;
+    background-color: #dae5d9;
+    overflow-y: auto;
+    overflow-x: auto;
+    padding: 10px;
 
     textarea {
       width: 80%;

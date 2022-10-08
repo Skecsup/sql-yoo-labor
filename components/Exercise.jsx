@@ -5,6 +5,8 @@ const Exercise = ({ title, serial_number, description, task }) => {
   const [query, setQuery] = useState("");
   const [allData, setAllData] = useState([]);
   const [columns, setColumns] = useState([]);
+  const [smiley, setSmiley] = useState("");
+
   const submitSql = async () => {
     const response = await fetch("api/getdata", {
       method: "POST",
@@ -14,10 +16,26 @@ const Exercise = ({ title, serial_number, description, task }) => {
       },
     });
     const data = await response.json();
-    console.log(data);
-    console.log(Object.keys(data.results[0]));
     setColumns(Object.keys(data.results[0]));
     setAllData(data.results);
+
+    const response2 = await fetch("api/checkdata", {
+      method: "POST",
+      body: JSON.stringify({
+        query: query,
+        solution: `select * from world
+where name = 'Germany'`,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data2 = await response2.json();
+    if (data2.results.length === 0) {
+      setSmiley("😀");
+    } else {
+      setSmiley("");
+    }
   };
   return (
     <Exercise_style>
@@ -25,7 +43,9 @@ const Exercise = ({ title, serial_number, description, task }) => {
       <hr />
       <div className="exercise">
         <div className="left-side">
-          <h1>{serial_number}.</h1>
+          <h1>
+            {serial_number}. {smiley}
+          </h1>
           <p>{description}</p>
           <p>{task}</p>
           <textarea
@@ -45,7 +65,8 @@ const Exercise = ({ title, serial_number, description, task }) => {
           </div>
         </div>
         <div className="result">
-          {/* <textarea rows={4} cols={50}></textarea> */}
+          <h1>Result:</h1>
+          <hr />
           <table>
             <thead>
               <tr>
@@ -66,15 +87,6 @@ const Exercise = ({ title, serial_number, description, task }) => {
               })}
             </tbody>
           </table>
-          {/* {allData.map((row) => {
-            return (
-              <div key={row.name}>
-                {columns.map((column) => {
-                  return row[column] + " ";
-                })}
-              </div>
-            );
-          })} */}
         </div>
       </div>
     </Exercise_style>
