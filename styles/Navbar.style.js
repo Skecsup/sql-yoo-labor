@@ -16,10 +16,18 @@ export const Navbar_style = styled.div`
     border-left: 2px solid #afdaf9;
   }
   .top-row {
+    display: flex;
     background-color: #fafafa;
     width: 100%;
     height: 10vh;
     border-bottom: 2px solid #afdaf9;
+    justify-content: end;
+    align-items: center;
+
+    button {
+      height: 50%;
+      margin-right: 20px;
+    }
   }
 
   .left-column {

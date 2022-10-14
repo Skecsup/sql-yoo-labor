@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Exercise_style } from "../styles/Exercise.style";
 
-const Exercise = ({ title, serial_number, description, task }) => {
+const Exercise = ({ title, serial_number, description, task, result }) => {
   const [query, setQuery] = useState("");
   const [allData, setAllData] = useState([]);
   const [columns, setColumns] = useState([]);
@@ -23,8 +23,7 @@ const Exercise = ({ title, serial_number, description, task }) => {
       method: "POST",
       body: JSON.stringify({
         query: query,
-        solution: `select * from world
-where name = 'Germany'`,
+        solution: `${result}`,
       }),
       headers: {
         "Content-Type": "application/json",
