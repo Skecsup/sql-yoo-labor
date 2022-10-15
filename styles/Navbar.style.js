@@ -34,10 +34,31 @@ export const Navbar_style = styled.div`
     background-color: #fafafa;
     height: 100vh;
     width: fit-content;
+
+    .tables {
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      div {
+        padding: 5px;
+        text-transform: uppercase;
+        font-weight: 500;
+        transition: color 0.3s ease-in-out;
+        &:hover {
+          color: #afdaf9;
+        }
+      }
+    }
+
     h1 {
       font-size: 30px;
       margin: 10px;
       margin-top: 25px;
+      transition: color 0.3s ease-in-out;
+      &:hover {
+        color: #afdaf9;
+      }
     }
   }
 `;

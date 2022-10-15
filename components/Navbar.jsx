@@ -21,12 +21,18 @@ const Navbar = ({ children }) => {
           <h1>
             <Link href={"/"}>SQLYOO</Link>
           </h1>
-          <div>
+          <div className="tables">
             {tables.map((table, i) => {
               if (table.Tables_in_world === "tasks") {
                 return;
               }
-              return <p key={i}>{table.Tables_in_world}</p>;
+              return (
+                <div key={i}>
+                  <Link href={`/${table.Tables_in_world}`}>
+                    {table.Tables_in_world}
+                  </Link>
+                </div>
+              );
             })}
           </div>
         </div>

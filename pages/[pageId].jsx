@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import Exercise from "../components/Exercise";
 
-const Select = () => {
+const TasksForTables = () => {
+  const router = useRouter();
+  const tableId = router.query.pageId;
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch("api/gettasks");
       const data = await response.json();
-      setTasks(data.results);
+      setTasks(data.results.filter((task) => task.BelongsTo === tableId));
     };
     fetchData();
-  }, []);
+  }, [tableId]);
   return (
     <div>
       {tasks.map((task) => (
@@ -21,6 +24,7 @@ const Select = () => {
           description={task.TaskDescription}
           task={task.Task}
           result={task.Solution}
+          belongs={task.BelongsTo}
           key={task.TaskID}
         />
       ))}
@@ -28,4 +32,4 @@ const Select = () => {
   );
 };
 
-export default Select;
+export default TasksForTables;

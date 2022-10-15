@@ -1,7 +1,14 @@
 import { useState, useEffect } from "react";
 import { Exercise_style } from "../styles/Exercise.style";
 
-const Exercise = ({ title, serial_number, description, task, result }) => {
+const Exercise = ({
+  title,
+  serial_number,
+  description,
+  task,
+  result,
+  belongs,
+}) => {
   const [query, setQuery] = useState("");
   const [allData, setAllData] = useState([]);
   const [columns, setColumns] = useState([]);
@@ -10,7 +17,7 @@ const Exercise = ({ title, serial_number, description, task, result }) => {
   const submitSql = async () => {
     const response = await fetch("api/getdata", {
       method: "POST",
-      body: JSON.stringify({ query }),
+      body: JSON.stringify({ query: query }),
       headers: {
         "Content-Type": "application/json",
       },
@@ -23,6 +30,7 @@ const Exercise = ({ title, serial_number, description, task, result }) => {
       method: "POST",
       body: JSON.stringify({
         query: query,
+        //need to somehow send the tables primary key
         solution: `${result}`,
       }),
       headers: {
