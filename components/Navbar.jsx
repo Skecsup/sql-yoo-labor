@@ -1,18 +1,11 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import { useAppContext } from "../context/appContext";
 import { Navbar_style } from "../styles/Navbar.style";
 
 const Navbar = ({ children }) => {
-  const [tables, setTables] = useState([]);
+  const { tables } = useAppContext();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch("api/gettables");
-      const data = await response.json();
-      setTables(data.results);
-    };
-    fetchData();
-  }, []);
   console.log(tables);
   return (
     <Navbar_style>
@@ -23,9 +16,6 @@ const Navbar = ({ children }) => {
           </h1>
           <div className="tables">
             {tables.map((table, i) => {
-              if (table.Tables_in_world === "tasks") {
-                return;
-              }
               return (
                 <div key={i}>
                   <Link href={`/${table.Tables_in_world}`}>
@@ -38,7 +28,7 @@ const Navbar = ({ children }) => {
         </div>
         <div className="nav-container-inner">
           <div className="top-row">
-            <Link href={"/create"}>
+            <Link href={"/login"}>
               <button>create tasks</button>
             </Link>
           </div>

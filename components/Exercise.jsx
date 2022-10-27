@@ -8,12 +8,20 @@ const Exercise = ({
   task,
   result,
   belongs,
+  tableData,
 }) => {
   const [query, setQuery] = useState("");
   const [allData, setAllData] = useState([]);
   const [columns, setColumns] = useState([]);
   const [smiley, setSmiley] = useState("");
+  const [primaryKey, setPrimaryKey] = useState([]);
 
+  useEffect(() => {
+    const getdata = () => {
+      setPrimaryKey(tableData.filter((el) => el.Key === "PRI"));
+    };
+    getdata();
+  }, [tableData]);
   const submitSql = async () => {
     const response = await fetch("api/getdata", {
       method: "POST",
@@ -23,6 +31,7 @@ const Exercise = ({
       },
     });
     const data = await response.json();
+    console.log(data);
     setColumns(Object.keys(data.results[0]));
     setAllData(data.results);
 
@@ -30,6 +39,7 @@ const Exercise = ({
       method: "POST",
       body: JSON.stringify({
         query: query,
+        priKey: primaryKey[0].Field,
         //need to somehow send the tables primary key
         solution: `${result}`,
       }),
@@ -37,6 +47,7 @@ const Exercise = ({
         "Content-Type": "application/json",
       },
     });
+    console.log(primaryKey[0].Field);
     const data2 = await response2.json();
     if (data2.results.length === 0) {
       setSmiley("😀");

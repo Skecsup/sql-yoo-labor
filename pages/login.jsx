@@ -1,12 +1,10 @@
 import React from "react";
+import Login from "../components/Login";
 
 const Create = () => {
   return (
     <div>
-      <input type="text" />
-      <input type="text" />
-      <input type="text" />
-      <input type="text" />
+      <Login />
     </div>
   );
 };
