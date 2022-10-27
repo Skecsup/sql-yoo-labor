@@ -20,11 +20,11 @@ const TasksForTables = () => {
   }, [tableId]);
   return (
     <div>
-      {tasks.map((task) => (
+      {tasks.map((task, i) => (
         <Exercise
           tableData={tableData}
           title={task.Title}
-          serial_number={task.TaskID}
+          serial_number={i + 1}
           description={task.TaskDescription}
           task={task.Task}
           result={task.Solution}
