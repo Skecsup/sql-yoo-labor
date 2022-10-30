@@ -3,9 +3,9 @@ import Login from "../components/Login";
 
 const Create = () => {
   return (
-    <div>
+    <>
       <Login />
-    </div>
+    </>
   );
 };
 

@@ -1,10 +1,13 @@
+import Cookies from "js-cookie";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useAppContext } from "../context/appContext";
-import { Navbar_style } from "../styles/Navbar.style";
+import { Navbar_style, Styled_Navbar_Button } from "../styles/Navbar.style";
 
 const Navbar = ({ children }) => {
   const { tables } = useAppContext();
+
+  const cookieState = Cookies.get("loggedin");
 
   console.log(tables);
   return (
@@ -28,8 +31,10 @@ const Navbar = ({ children }) => {
         </div>
         <div className="nav-container-inner">
           <div className="top-row">
-            <Link href={"/login"}>
-              <button>create tasks</button>
+            <Link href={cookieState ? "/welcome" : "/login"}>
+              <Styled_Navbar_Button>
+                {cookieState ? "Create tasks" : "Log in"}
+              </Styled_Navbar_Button>
             </Link>
           </div>
           <div className="content">{children}</div>

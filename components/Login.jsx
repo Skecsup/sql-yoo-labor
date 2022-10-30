@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
+import { Styled_Login } from "../styles/Login.style";
 const Login = () => {
   const router = useRouter();
   const [name, setName] = useState("");
@@ -24,15 +25,25 @@ const Login = () => {
   };
   console.log(result);
   return (
-    <div>
+    <Styled_Login>
       <form onSubmit={register}>
-        <label htmlFor="">Name</label>
-        <input type="text" onChange={(e) => setName(e.target.value)} />
+        <label htmlFor="">Username</label>
+        <input
+          type="text"
+          autoComplete="username"
+          onChange={(e) => setName(e.target.value)}
+        />
         <label htmlFor="">Password</label>
-        <input type="password" onChange={(e) => setPassword(e.target.value)} />
+        <input
+          type="password"
+          minLength={6}
+          required
+          autoComplete="current-password"
+          onChange={(e) => setPassword(e.target.value)}
+        />
         <button type="submit">Submit</button>
       </form>
-    </div>
+    </Styled_Login>
   );
 };
 

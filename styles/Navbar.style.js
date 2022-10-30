@@ -14,6 +14,7 @@ export const Navbar_style = styled.div`
   .content {
     padding: 10px;
     border-left: 2px solid #afdaf9;
+    height: 100%;
   }
   .top-row {
     display: flex;
@@ -60,5 +61,20 @@ export const Navbar_style = styled.div`
         color: #afdaf9;
       }
     }
+  }
+`;
+
+export const Styled_Navbar_Button = styled.button`
+  border: none;
+  background-color: #afdaf9;
+  border-radius: 10px;
+  text-transform: uppercase;
+  padding: 10px;
+  color: #000;
+  font-weight: 100;
+  transition: 0.3s ease-in-out;
+  cursor: pointer;
+  &:hover {
+    background-color: #3279b5;
   }
 `;

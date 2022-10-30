@@ -14,14 +14,27 @@ const Exercise = ({
   const [allData, setAllData] = useState([]);
   const [columns, setColumns] = useState([]);
   const [smiley, setSmiley] = useState("");
-  const [primaryKey, setPrimaryKey] = useState([]);
+  const [showAnswer, setShowAnswer] = useState(false);
+  const [correctAnswer, setCorrectAnswer] = useState([]);
+  const [correctColumns, setCorrectColumns] = useState([]);
+  const [extraLogicValue, setExtraLogicValue] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
-  useEffect(() => {
-    const getdata = () => {
-      setPrimaryKey(tableData.filter((el) => el.Key === "PRI"));
-    };
-    getdata();
-  }, [tableData]);
+  const showCorrectAnswer = async () => {
+    setShowAnswer(!showAnswer);
+  };
+
+  const restoreToDefault = () => {
+    setQuery("");
+    setAllData([]);
+    setColumns([]);
+    setSmiley("");
+    setShowAnswer(false);
+    setCorrectAnswer([]);
+    setCorrectColumns([]);
+    setExtraLogicValue(false);
+  };
+
   const submitSql = async () => {
     const response = await fetch("api/getdata", {
       method: "POST",
@@ -32,29 +45,59 @@ const Exercise = ({
     });
     const data = await response.json();
     console.log(data);
-    setColumns(Object.keys(data.results[0]));
-    setAllData(data.results);
+    try {
+      setAllData(data.results);
+      if (data.results.length > 0) {
+        setColumns(Object.keys(data.results[0]));
+      }
+      setErrorMessage("");
+    } catch {
+      setErrorMessage(data.err.sqlMessage);
+      setColumns([]);
+      setAllData([]);
+    }
 
-    const response2 = await fetch("api/checkdata", {
+    const response3 = await fetch("api/getdata", {
       method: "POST",
-      body: JSON.stringify({
-        query: query,
-        priKey: primaryKey[0].Field,
-        //need to somehow send the tables primary key
-        solution: `${result}`,
-      }),
+      body: JSON.stringify({ query: result }),
       headers: {
         "Content-Type": "application/json",
       },
     });
-    console.log(primaryKey[0].Field);
-    const data2 = await response2.json();
-    if (data2.results.length === 0) {
+    const data3 = await response3.json();
+    setCorrectColumns(Object.keys(data3.results[0]));
+    setCorrectAnswer(data3.results);
+
+    // const response2 = await fetch("api/checkdata", {
+    //   method: "POST",
+    //   body: JSON.stringify({
+    //     query: query,
+    //     priKey: primaryKey[0].Field,
+    //     //need to somehow send the tables primary key
+    //     solution: `${result}`,
+    //   }),
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // });
+    // console.log(primaryKey[0].Field);
+    // const data2 = await response2.json();
+
+    setExtraLogicValue(true);
+  };
+
+  useEffect(() => {
+    if (
+      JSON.stringify(correctColumns) !== JSON.stringify([]) &&
+      JSON.stringify(correctColumns) === JSON.stringify(columns) &&
+      JSON.stringify(correctAnswer) === JSON.stringify(allData)
+    ) {
       setSmiley("😀");
     } else {
       setSmiley("");
     }
-  };
+  }, [allData, columns, correctAnswer, correctColumns]);
+
   return (
     <Exercise_style>
       <h2>{title}</h2>
@@ -79,32 +122,73 @@ const Exercise = ({
             <button onClick={submitSql} className="submit-button">
               Submit sql
             </button>
-            <button className="default">Restore default</button>
+            <button onClick={restoreToDefault} className="default">
+              Restore default
+            </button>
           </div>
         </div>
         <div className="result">
-          <h1>Result:</h1>
+          <h2>
+            {smiley === "😀"
+              ? "Correct answer"
+              : errorMessage !== ""
+              ? "Error:"
+              : extraLogicValue
+              ? "Wrong answer. Some of the data is incorrect."
+              : "Result:"}
+          </h2>
           <hr />
-          <table>
-            <thead>
-              <tr>
-                {columns.map((column) => {
-                  return <th key={column}>{column}</th>;
+          {errorMessage !== "" ? (
+            <p>{errorMessage}</p>
+          ) : (
+            <table>
+              <thead>
+                <tr>
+                  {columns.map((column) => {
+                    return <th key={column}>{column}</th>;
+                  })}
+                </tr>
+              </thead>
+              <tbody>
+                {allData.map((row, i) => {
+                  return (
+                    <tr key={i}>
+                      {columns.map((column, i) => {
+                        return <td key={column}>{row[column]}</td>;
+                      })}
+                    </tr>
+                  );
                 })}
-              </tr>
-            </thead>
-            <tbody>
-              {allData.map((row, i) => {
-                return (
-                  <tr key={i}>
-                    {columns.map((column, i) => {
-                      return <td key={column}>{row[column]}</td>;
+              </tbody>
+            </table>
+          )}
+          {extraLogicValue && smiley === "" && (
+            <div>
+              <button onClick={showCorrectAnswer}>Correct answer</button>
+              {showAnswer && (
+                <table>
+                  <thead>
+                    <tr>
+                      {correctColumns.map((column) => {
+                        return <th key={column}>{column}</th>;
+                      })}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {correctAnswer.map((row, i) => {
+                      return (
+                        <tr key={i}>
+                          {correctColumns.map((column, i) => {
+                            return <td key={column}>{row[column]}</td>;
+                          })}
+                        </tr>
+                      );
                     })}
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+                  </tbody>
+                </table>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </Exercise_style>

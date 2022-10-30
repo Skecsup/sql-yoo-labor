@@ -6,10 +6,10 @@ export default function handler(req, res) {
     [req.body.name, req.body.password],
     function (err, results, fields) {
       if (results.length > 0) {
-        console.log("nice");
+        console.log("success");
         res.status(200).json({ route: "/welcome" });
       } else {
-        console.log("fuckof");
+        console.log("wrong username or password");
         res.status(401).json({ route: "/" });
       }
       console.log(results); // results contains rows returned by server

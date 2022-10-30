@@ -19,7 +19,7 @@ const TasksForTables = () => {
     fetchTableData(tableId);
   }, [tableId]);
   return (
-    <div>
+    <>
       {tasks.map((task, i) => (
         <Exercise
           tableData={tableData}
@@ -32,7 +32,7 @@ const TasksForTables = () => {
           key={task.TaskID}
         />
       ))}
-    </div>
+    </>
   );
 };
 
