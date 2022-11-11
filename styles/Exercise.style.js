@@ -1,6 +1,12 @@
 import styled from "styled-components";
 
 export const Exercise_style = styled.div`
+  h2 {
+    margin-top: 30px;
+  }
+  .bold {
+    font-weight: bold;
+  }
   .color {
     background-color: #dae5d9;
   }
@@ -14,7 +20,6 @@ export const Exercise_style = styled.div`
   }
   .result {
     width: 50%;
-    max-width: 50vw;
     min-height: 100%;
     max-height: 300px;
     border-radius: 10px;
@@ -38,6 +43,9 @@ export const Exercise_style = styled.div`
     }
   }
   textarea {
+    max-width: 40vw;
+    width: 80%;
+    height: 100px;
     box-shadow: 5px 5px 10px #555;
     margin-bottom: 10px;
   }
@@ -77,9 +85,17 @@ export const Exercise_style = styled.div`
   @media only screen and (max-width: 1200px) {
     .exercise {
       flex-direction: column;
+      width: 100%;
+    }
+    .left-side {
+      width: 100%;
     }
     .result {
       min-height: 200px;
+      width: 100%;
+    }
+    textarea {
+      max-width: 80vw;
     }
   }
 `;

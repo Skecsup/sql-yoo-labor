@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Cookies from "js-cookie";
+import { toast, ToastContainer } from "react-toastify";
 import { useRouter } from "next/router";
 import { useAppContext } from "../context/appContext";
 import { Container } from "../styles/Create.style";
@@ -15,7 +16,7 @@ const Create = () => {
     Solution: "",
     BelongsTo: "",
   });
-  const { tables, tableData, fetchTableData } = useAppContext();
+  const { tables, tableData, fetchTableData, logoutHandler } = useAppContext();
 
   console.log(tableData);
 
@@ -68,14 +69,10 @@ const Create = () => {
     console.log(data);
   };
 
-  const logout = () => {
-    Cookies.remove("loggedin");
-    router.push("/");
-  };
   return (
     <Container>
       <div className="button-container">
-        <button className="logout" onClick={logout}>
+        <button className="logout" onClick={logoutHandler}>
           logout
         </button>
       </div>
@@ -83,28 +80,30 @@ const Create = () => {
         <div>
           <h1>Create tasks</h1>
 
-          <select
-            defaultValue={"-- select an option --"}
-            onChange={(e) =>
-              setNewTask({ ...newTask, BelongsTo: e.target.value })
-            }
-          >
-            <option disabled id="">
-              {" "}
-              -- select an option --{" "}
-            </option>
-            {tables.map((table, i) => {
-              return (
-                <option key={i} value={table.Tables_in_world}>
-                  {table.Tables_in_world}
-                </option>
-              );
-            })}
-          </select>
           <div>
             <form onSubmit={createTask}>
+              <select
+                required
+                defaultValue={"-- select an option --"}
+                onChange={(e) =>
+                  setNewTask({ ...newTask, BelongsTo: e.target.value })
+                }
+              >
+                <option disabled id="">
+                  {" "}
+                  -- select an option --{" "}
+                </option>
+                {tables.map((table, i) => {
+                  return (
+                    <option key={i} value={table.Tables_in_world}>
+                      {table.Tables_in_world}
+                    </option>
+                  );
+                })}
+              </select>
               <label htmlFor="">Title</label>
               <input
+                required
                 onChange={(e) =>
                   setNewTask({ ...newTask, Title: e.target.value })
                 }
@@ -113,6 +112,7 @@ const Create = () => {
 
               <label htmlFor="">Description</label>
               <input
+                required
                 onChange={(e) =>
                   setNewTask({ ...newTask, TaskDescription: e.target.value })
                 }
@@ -121,6 +121,7 @@ const Create = () => {
 
               <label htmlFor="">Task</label>
               <input
+                required
                 onChange={(e) =>
                   setNewTask({ ...newTask, Task: e.target.value })
                 }
@@ -129,6 +130,7 @@ const Create = () => {
 
               <label htmlFor="">Solution</label>
               <input
+                required
                 onChange={(e) =>
                   setNewTask({ ...newTask, Solution: e.target.value })
                 }
@@ -143,6 +145,8 @@ const Create = () => {
           <h1>Create table</h1>
           <form onSubmit={createTable}>
             <textarea
+              defaultValue={"CREATE TABLE();"}
+              required
               name=""
               id=""
               cols="30"
@@ -155,29 +159,32 @@ const Create = () => {
 
         <div className="insert-container">
           <h1>Insert into table</h1>
-          <select
-            defaultValue={"-- select an option --"}
-            onChange={(e) => {
-              setInsertionData({});
-              setInsertionTableName(e.target.value);
-              fetchTableData(e.target.value);
-            }}
-          >
-            <option disabled> -- select an option -- </option>
-            {tables.map((table, i) => {
-              return (
-                <option key={i} value={table.Tables_in_world}>
-                  {table.Tables_in_world}
-                </option>
-              );
-            })}
-          </select>
           <form onSubmit={insertIntoTable}>
+            <select
+              required
+              defaultValue={"-- select an option --"}
+              onChange={(e) => {
+                setInsertionData({});
+                setInsertionTableName(e.target.value);
+                fetchTableData(e.target.value);
+              }}
+            >
+              <option disabled> -- select an option -- </option>
+              {tables.map((table, i) => {
+                return (
+                  <option key={i} value={table.Tables_in_world}>
+                    {table.Tables_in_world}
+                  </option>
+                );
+              })}
+            </select>
+
             {tableData.map((el) => {
               return (
                 <div key={el.Field}>
                   <label>{el.Field}</label>
                   <input
+                    required
                     onChange={(e) =>
                       setInsertionData({
                         ...insertionData,

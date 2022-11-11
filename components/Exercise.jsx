@@ -108,12 +108,10 @@ const Exercise = ({
             {serial_number}. {smiley}
           </h1>
           <p>{description}</p>
-          <p>{task}</p>
+          <p className="bold">{task}</p>
           <textarea
             id="basic_query"
             name="query"
-            rows={4}
-            cols={50}
             onChange={(e) => setQuery(e.target.value)}
             value={query}
           />

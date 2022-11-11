@@ -1,6 +1,9 @@
 import connection from "../../database/db_connection";
 
 export default function handler(req, res) {
+  if (req.body.tableName === "") {
+    res.status(500).json({ msg: "no table selected" });
+  }
   let columnDataString = ``;
   let columns = ``;
   for (const property in req.body.columnData) {
@@ -21,9 +24,9 @@ export default function handler(req, res) {
     `INSERT INTO ${req.body.tableName} (${columns}) VALUES(${columnDataString});`,
     function (err, results, fields) {
       console.log(results); // results contains rows returned by server
-      //console.log(fields); // fields contains extra meta data about results, if available
+      console.log(fields); // fields contains extra meta data about results, if available
       console.log(err);
-      res.status(201).json({ results });
+      res.status(201).json({ results, msg: "success" });
     }
   );
 }

@@ -5,18 +5,17 @@ import { useAppContext } from "../context/appContext";
 import { Navbar_style, Styled_Navbar_Button } from "../styles/Navbar.style";
 
 const Navbar = ({ children }) => {
-  const { tables } = useAppContext();
-
-  const cookieState = Cookies.get("loggedin");
+  const { tables, cookieState } = useAppContext();
 
   console.log(tables);
   return (
     <Navbar_style>
       <div className="nav-container">
         <div className="left-column">
-          <h1>
-            <Link href={"/"}>SQLYOO</Link>
-          </h1>
+          <Link href={"/"}>
+            <h1>SQLYOO</h1>
+          </Link>
+
           <div className="tables">
             {tables.map((table, i) => {
               return (

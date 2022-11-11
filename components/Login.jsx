@@ -1,32 +1,15 @@
 import React, { useState } from "react";
-import { useRouter } from "next/router";
-import Cookies from "js-cookie";
+
 import { Styled_Login } from "../styles/Login.style";
+import { useAppContext } from "../context/appContext";
 const Login = () => {
-  const router = useRouter();
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
-  const [result, setResult] = useState([]);
+  const { loginHandler } = useAppContext();
 
-  const register = async (e) => {
-    e.preventDefault();
-    const response = await fetch("api/register", {
-      method: "POST",
-      body: JSON.stringify({ name: name, password: password }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await response.json();
-    if (data.route === "/welcome") {
-      Cookies.set("loggedin", "true");
-    }
-    router.push(data.route);
-  };
-  console.log(result);
   return (
     <Styled_Login>
-      <form onSubmit={register}>
+      <form onSubmit={(e) => loginHandler(e, name, password)}>
         <label htmlFor="">Username</label>
         <input
           type="text"
