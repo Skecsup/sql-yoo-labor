@@ -21,7 +21,9 @@ const Navbar = ({ children }) => {
               return (
                 <div key={i}>
                   <Link href={`/${table.Tables_in_world}`}>
-                    {table.Tables_in_world}
+                    {table.Tables_in_world.length < 10
+                      ? table.Tables_in_world
+                      : table.Tables_in_world.slice(0, 10).concat("...")}
                   </Link>
                 </div>
               );

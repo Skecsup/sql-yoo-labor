@@ -8,6 +8,7 @@ const AppProvider = ({ children }) => {
   const router = useRouter();
   const [tables, setTables] = useState([]);
   const [tableData, setTableData] = useState([]);
+  const [tableChange, setTableChange] = useState(false);
 
   const [cookieState, setCookieState] = useState(false);
   useEffect(() => {
@@ -28,7 +29,7 @@ const AppProvider = ({ children }) => {
       );
     };
     fetchData();
-  }, []);
+  }, [tableChange]);
   const fetchTableData = async (tableId) => {
     const response = await fetch("api/gettabledata", {
       method: "POST",
@@ -70,6 +71,8 @@ const AppProvider = ({ children }) => {
     loginHandler,
     logoutHandler,
     cookieState,
+    tableChange,
+    setTableChange,
   };
 
   return <AppContext.Provider value={context}>{children}</AppContext.Provider>;

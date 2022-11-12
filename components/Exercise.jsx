@@ -1,15 +1,7 @@
 import { useState, useEffect } from "react";
 import { Exercise_style } from "../styles/Exercise.style";
 
-const Exercise = ({
-  title,
-  serial_number,
-  description,
-  task,
-  result,
-  belongs,
-  tableData,
-}) => {
+const Exercise = ({ title, serial_number, description, task, result }) => {
   const [query, setQuery] = useState("");
   const [allData, setAllData] = useState([]);
   const [columns, setColumns] = useState([]);
