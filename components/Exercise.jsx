@@ -57,7 +57,11 @@ const Exercise = ({ title, serial_number, description, task, result }) => {
       },
     });
     const data3 = await response3.json();
-    setCorrectColumns(Object.keys(data3.results[0]));
+    try {
+      setCorrectColumns(Object.keys(data3.results[0]));
+    } catch {
+      console.log("wrong solution");
+    }
     setCorrectAnswer(data3.results);
 
     // const response2 = await fetch("api/checkdata", {

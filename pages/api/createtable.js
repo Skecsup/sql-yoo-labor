@@ -16,8 +16,8 @@ export default function handler(req, res) {
   connection.query(
     `CREATE TABLE${secureQuery}`,
     function (err, results, fields) {
-      console.log(results); // results contains rows returned by server
-      console.log(fields); // fields contains extra meta data about results, if available
+      console.log(results);
+      console.log(fields);
       console.log(err);
       if (err) {
         res.status(500).json({ msg: err.message });

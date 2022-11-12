@@ -10,36 +10,34 @@ const Navbar = ({ children }) => {
   console.log(tables);
   return (
     <Navbar_style>
-      <div className="nav-container">
-        <div className="left-column">
-          <Link href={"/"}>
-            <h1>SQLYOO</h1>
-          </Link>
+      <div className="left-column">
+        <Link href={"/"}>
+          <h1>SQLYOO</h1>
+        </Link>
 
-          <div className="tables">
-            {tables.map((table, i) => {
-              return (
-                <div key={i}>
-                  <Link href={`/${table.Tables_in_world}`}>
-                    {table.Tables_in_world.length < 10
-                      ? table.Tables_in_world
-                      : table.Tables_in_world.slice(0, 10).concat("...")}
-                  </Link>
-                </div>
-              );
-            })}
-          </div>
+        <div className="tables">
+          {tables.map((table, i) => {
+            return (
+              <div key={i}>
+                <Link href={`/${table.Tables_in_world}`}>
+                  {table.Tables_in_world.length < 10
+                    ? table.Tables_in_world
+                    : table.Tables_in_world.slice(0, 10).concat("...")}
+                </Link>
+              </div>
+            );
+          })}
         </div>
-        <div className="nav-container-inner">
-          <div className="top-row">
-            <Link href={cookieState ? "/welcome" : "/login"}>
-              <Styled_Navbar_Button>
-                {cookieState ? "Create tasks" : "Log in"}
-              </Styled_Navbar_Button>
-            </Link>
-          </div>
-          <div className="content">{children}</div>
+      </div>
+      <div className="nav-container-inner">
+        <div className="top-row">
+          <Link href={cookieState ? "/welcome" : "/login"}>
+            <Styled_Navbar_Button>
+              {cookieState ? "Create tasks" : "Log in"}
+            </Styled_Navbar_Button>
+          </Link>
         </div>
+        <div className="content">{children}</div>
       </div>
     </Navbar_style>
   );

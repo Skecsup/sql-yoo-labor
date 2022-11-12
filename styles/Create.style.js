@@ -76,6 +76,9 @@ export const Container = styled.div`
       box-shadow: 0 0 10px #719ece;
     }
   }
+  textarea {
+    resize: vertical;
+  }
   label {
     text-transform: capitalize;
   }

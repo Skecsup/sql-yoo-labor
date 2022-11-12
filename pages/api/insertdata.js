@@ -23,8 +23,8 @@ export default function handler(req, res) {
   connection.query(
     `INSERT INTO ${req.body.tableName} (${columns}) VALUES(${columnDataString});`,
     function (err, results, fields) {
-      console.log(results); // results contains rows returned by server
-      console.log(fields); // fields contains extra meta data about results, if available
+      console.log(results);
+      console.log(fields);
       console.log(err);
       res.status(201).json({ results, msg: "success" });
     }

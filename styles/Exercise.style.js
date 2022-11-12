@@ -27,20 +27,6 @@ export const Exercise_style = styled.div`
     overflow-y: auto;
     overflow-x: auto;
     padding: 10px;
-
-    textarea {
-      width: 80%;
-      height: 100%;
-      background-color: #dae5d9;
-      border: none;
-      box-shadow: none;
-      margin-bottom: 0;
-      border-radius: 10px;
-      max-width: 100%;
-      max-height: 100%;
-      border: 1px solid black;
-      box-shadow: 5px 5px 10px #555;
-    }
   }
   textarea {
     max-width: 40vw;
@@ -92,7 +78,7 @@ export const Exercise_style = styled.div`
     }
     .result {
       min-height: 200px;
-      width: 100%;
+      width: 80%;
     }
     textarea {
       max-width: 80vw;

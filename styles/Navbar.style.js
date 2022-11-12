@@ -1,11 +1,10 @@
 import styled from "styled-components";
 
 export const Navbar_style = styled.div`
-  .nav-container {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-  }
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+
   .nav-container-inner {
     display: flex;
     flex-direction: column;
