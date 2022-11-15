@@ -26,7 +26,11 @@ export default function handler(req, res) {
       console.log(results);
       console.log(fields);
       console.log(err);
-      res.status(201).json({ results, msg: "success" });
+      if (err) {
+        res.status(500).json({ msg: err.message });
+      } else {
+        res.status(201).json({ msg: "success" });
+      }
     }
   );
 }
