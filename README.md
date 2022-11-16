@@ -2,6 +2,9 @@
 
 First, create your own mysql database
 
+After that, change the code in
+sqlyoo/database/db_connection.js
+
 ```code
 
 import mysql from "mysql2";
@@ -18,7 +21,7 @@ export default connection;
 
 ```
 
-First, run the development server:
+Then, run the development server:
 
 ```bash
 npm run dev
